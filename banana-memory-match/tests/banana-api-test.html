@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banana API Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 750px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+
+    button {
+      padding: 10px 16px;
+      cursor: pointer;
+    }
+
+    pre {
+      padding: 16px;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    img {
+      max-width: 100%;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Banana API Test</h1>
+  <p>Send a GET request and inspect the response.</p>
+
+  <button id="testButton">Test Banana API</button>
+
+  <h2>Request Details</h2>
+  <pre id="request">Not sent yet.</pre>
+
+  <h2>Response Details</h2>
+  <pre id="response">Click the button to test the API.</pre>
+
+  <h2>Puzzle Image</h2>
+  <img id="puzzleImage" alt="Banana API puzzle" hidden>
+
+  <script>
+    const endpoint =
+      "http://marcconrad.com/uob/banana/api.php?out=json";
+
+    document
+      .getElementById("testButton")
+      .addEventListener("click", testAPI);
+
+    async function testAPI() {
+      const requestOutput = document.getElementById("request");
+      const responseOutput = document.getElementById("response");
+      const puzzleImage = document.getElementById("puzzleImage");
+
+      requestOutput.textContent =
+        `Method: GET\nURL: ${endpoint}\nBody: None`;
+
+      responseOutput.textContent = "Sending request...";
+      puzzleImage.hidden = true;
+
+      try {
+        const result = await fetch(endpoint);
+
+        const rawText = await result.text();
+
+        responseOutput.textContent =
+          `HTTP status: ${result.status} ${result.statusText}\n` +
+          `Content-Type: ${result.headers.get("content-type")}\n\n` +
+          `Raw response:\n${rawText}`;
+
+        if (!result.ok) {
+          throw new Error(`HTTP error ${result.status}`);
+        }
+
+        const data = JSON.parse(rawText);
+
+        responseOutput.textContent +=
+          `\n\nParsed JSON:\n${JSON.stringify(data, null, 2)}`;
+
+        if (data.question) {
+          puzzleImage.src = data.question;
+          puzzleImage.hidden = false;
+        }
+      } catch (error) {
+        responseOutput.textContent +=
+          `\n\nRequest failed: ${error.message}\n` +
+          "Check the browser console for additional details.";
+        console.error("Banana API test failed:", error);
+      }
+    }
+  </script>
+</body>
+</html>
