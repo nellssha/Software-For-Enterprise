@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banana Puzzle Arena - Math Challenges, Game Modes & Leaderboard</title>
+  <meta name="description" content="Play the ultimate Banana Puzzle Game! Multiple game modes, countdown timers, player accounts, scoring streaks, and global leaderboards.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Confetti Canvas for Celebrations -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <div class="app-container">
+    
+    <!-- Header & Navigation -->
+    <header class="app-header">
+      <a href="#" class="brand" id="brandHomeBtn">
+        <span class="brand-icon">🍌</span>
+        <div>
+          <span class="brand-title">Banana Arena</span>
+          <span class="brand-badge">PRO</span>
+        </div>
+      </a>
+
+      <!-- Navigation Tabs -->
+      <nav>
+        <ul class="nav-tabs">
+          <li>
+            <button class="nav-tab-btn active" data-view="arena">
+              <span>🎮</span> Play Puzzle
+            </button>
+          </li>
+          <li>
+            <button class="nav-tab-btn" data-view="time_challenge">
+              <span>⏱️</span> Time Challenge
+            </button>
+          </li>
+          <li>
+            <button class="nav-tab-btn" data-view="leaderboard">
+              <span>🏆</span> Leaderboard
+            </button>
+          </li>
+          <li>
+            <button class="nav-tab-btn" data-view="achievements">
+              <span>🎖️</span> Badges
+            </button>
+          </li>
+          <li>
+            <button class="nav-tab-btn" data-view="profile">
+              <span>👤</span> My Profile
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Action & Auth Nav Bar -->
+      <div class="header-actions">
+        <!-- Sound Effect Toggle -->
+        <button id="soundToggleBtn" class="sound-toggle-btn" title="Toggle Sound Effects" aria-label="Toggle Sound">
+          🔊
+        </button>
+
+        <!-- Auth Controls (Dynamically Updated) -->
+        <div id="authNavContainer" class="auth-nav-container">
+          <button id="openAuthModalBtn" class="btn btn-primary btn-sm">
+            <span>🔑</span> Login / Register
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ========================================== -->
+    <!-- VIEW 1: BANANA PUZZLE ARENA -->
+    <!-- ========================================== -->
+    <main id="viewArena" class="view-section active">
+      
+      <!-- LOBBY / SETUP SCREEN -->
+      <section id="arenaLobby" class="arena-lobby-card">
+        <div class="lobby-hero">
+          <div class="lobby-badge">🍌 LIVE BANANA API MATH CHALLENGE</div>
+          <h1 class="lobby-title">The Ultimate Banana Puzzle Arena</h1>
+          <p class="lobby-subtitle">
+            Solve tropical visual math equations in real-time, build your combo streaks, survive against the countdown clock, and conquer the global leaderboard!
+          </p>
+        </div>
+
+        <!-- Game Mode Selection Grid -->
+        <div class="mode-select-section">
+          <h2 class="section-title"><span>1</span> Choose Game Mode</h2>
+          <div class="mode-cards-grid">
+            
+            <div class="mode-card active" data-mode="classic">
+              <div class="mode-card-header">
+                <span class="mode-icon">🎮</span>
+                <span class="mode-tag">Popular</span>
+              </div>
+              <h3 class="mode-name">Classic Arena</h3>
+              <p class="mode-desc">
+                Solve puzzles round-by-round with a per-puzzle countdown timer and limited lives. Build your streak multiplier!
+              </p>
+              <div class="mode-features">
+                <span>❤️ Limited Lives</span>
+                <span>⏱️ Puzzle Timer</span>
+                <span>🔥 Streak Combos</span>
+              </div>
+            </div>
+
+            <div class="mode-card" data-mode="time_challenge">
+              <div class="mode-card-header">
+                <span class="mode-icon">⏱️</span>
+                <span class="mode-tag tag-hot">High Speed</span>
+              </div>
+              <h3 class="mode-name">Time Challenge</h3>
+              <p class="mode-desc">
+                Solve as many puzzles as possible within a fixed 60-second limit. Fast correct answers award extra time & bonus points!
+              </p>
+              <div class="mode-features">
+                <span>⚡ 60s Blitz</span>
+                <span>⏳ Time Bonuses</span>
+                <span>🚀 Rapid Scoring</span>
+              </div>
+            </div>
+
+            <div class="mode-card" data-mode="practice">
+              <div class="mode-card-header">
+                <span class="mode-icon">🧘</span>
+                <span class="mode-tag tag-zen">Relaxed</span>
+              </div>
+              <h3 class="mode-name">Practice Zen</h3>
+              <p class="mode-desc">
+                No timer and no life loss. Solve Banana puzzles at your own leisurely pace to warm up and sharpen your math logic.
+              </p>
+              <div class="mode-features">
+                <span>🛡️ Infinite Lives</span>
+                <span>🚫 No Timer Stress</span>
+                <span>💡 Free Training</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Difficulty Settings -->
+        <div class="difficulty-section">
+          <h2 class="section-title"><span>2</span> Select Difficulty Setting</h2>
+          <div class="difficulty-pills-wrap">
+            
+            <label class="diff-pill-btn">
+              <input type="radio" name="difficultySelect" value="easy">
+              <div class="diff-pill-content diff-easy">
+                <span class="diff-icon">🟢</span>
+                <div class="diff-text">
+                  <strong>Easy</strong>
+                  <small>45s timer &bull; 5 Lives &bull; 1 Retry &bull; 1.0x Score</small>
+                </div>
+              </div>
+            </label>
+
+            <label class="diff-pill-btn">
+              <input type="radio" name="difficultySelect" value="medium" checked>
+              <div class="diff-pill-content diff-medium">
+                <span class="diff-icon">🟡</span>
+                <div class="diff-text">
+                  <strong>Medium</strong>
+                  <small>30s timer &bull; 3 Lives &bull; Standard &bull; 1.5x Score</small>
+                </div>
+              </div>
+            </label>
+
+            <label class="diff-pill-btn">
+              <input type="radio" name="difficultySelect" value="hard">
+              <div class="diff-pill-content diff-hard">
+                <span class="diff-icon">🔴</span>
+                <div class="diff-text">
+                  <strong>Hard</strong>
+                  <small>15s timer &bull; 2 Lives &bull; Strict &bull; 2.0x Score</small>
+                </div>
+              </div>
+            </label>
+
+          </div>
+        </div>
+
+        <!-- Start Game Action -->
+        <div class="lobby-action-row">
+          <button id="startGameBtn" class="btn btn-primary btn-xl">
+            <span>🚀</span> Start Puzzle Challenge
+          </button>
+        </div>
+
+      </section>
+
+      <!-- ACTIVE GAMEPLAY STAGE (Hidden by default, shown during round) -->
+      <section id="arenaGameplay" class="arena-gameplay-stage" style="display: none;">
+        
+        <!-- Live In-Game HUD -->
+        <div class="game-hud-panel">
+          
+          <!-- Mode & Difficulty Pill -->
+          <div class="hud-pill hud-mode-pill">
+            <span id="hudModeIcon">🎮</span>
+            <span id="hudModeName">Classic</span>
+            <span class="hud-dot">&bull;</span>
+            <span id="hudDifficultyName">Medium</span>
+          </div>
+
+          <!-- Score Display -->
+          <div class="hud-stat-box">
+            <span class="hud-label">Score</span>
+            <span id="hudScoreDisplay" class="hud-value hud-score">0</span>
+          </div>
+
+          <!-- Lives Display -->
+          <div class="hud-stat-box" id="hudLivesContainer">
+            <span class="hud-label">Lives</span>
+            <div id="hudLivesIcons" class="hud-lives-icons">
+              <span class="heart-icon active">❤️</span>
+              <span class="heart-icon active">❤️</span>
+              <span class="heart-icon active">❤️</span>
+            </div>
+          </div>
+
+          <!-- Timer Display -->
+          <div class="hud-stat-box" id="hudTimerContainer">
+            <span class="hud-label" id="hudTimerLabel">Time Left</span>
+            <div class="timer-value-wrap">
+              <span class="timer-clock-icon">⏱️</span>
+              <span id="hudTimerDisplay" class="hud-value">30s</span>
+            </div>
+          </div>
+
+          <!-- Streak Multiplier -->
+          <div class="hud-stat-box">
+            <span class="hud-label">Streak</span>
+            <span id="hudStreakDisplay" class="hud-value hud-streak">0x</span>
+          </div>
+
+          <!-- Solved Counter -->
+          <div class="hud-stat-box">
+            <span class="hud-label">Solved</span>
+            <span id="hudSolvedDisplay" class="hud-value">0</span>
+          </div>
+
+          <!-- End / Exit Round Buttons -->
+          <div class="hud-actions-group">
+            <button id="exitToLobbyBtn" class="btn btn-secondary btn-sm" title="Exit to Lobby">
+              <span>🚪</span> Exit Game
+            </button>
+            <button id="forfeitRoundBtn" class="btn btn-danger btn-sm" title="End Current Session">
+              <span>⏹️</span> End Round
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Timer Visual Progress Bar -->
+        <div class="timer-progress-track" id="timerProgressTrack">
+          <div class="timer-progress-fill" id="timerProgressBar"></div>
+        </div>
+
+        <!-- Puzzle Presentation Arena -->
+        <div class="puzzle-arena-card">
+          
+          <div class="puzzle-meta-bar">
+            <div class="puzzle-source-pill" id="puzzleSourcePill">
+              <span>🌐</span> Banana API Connected
+            </div>
+            <div class="puzzle-counter-pill" id="puzzleCounterPill">
+              Puzzle #1
+            </div>
+            <button id="skipPuzzleBtn" class="btn btn-secondary btn-sm" title="Skip to next puzzle">
+              <span>⏭️</span> Skip Puzzle
+            </button>
+          </div>
+
+          <!-- Puzzle Image Box -->
+          <div class="puzzle-image-box" id="puzzleImageBox">
+            
+            <!-- Loading Skeleton -->
+            <div class="puzzle-loading-state" id="puzzleLoadingState">
+              <div class="bouncing-banana">🍌</div>
+              <div class="spinner"></div>
+              <p id="puzzleLoadingText">Retrieving puzzle from Banana API...</p>
+            </div>
+
+            <!-- Puzzle Image Element -->
+            <img id="puzzleImg" src="" alt="Banana Math Puzzle" style="display: none;">
+            
+          </div>
+
+          <!-- Dynamic Feedback Banner -->
+          <div id="puzzleFeedback" class="puzzle-feedback-card"></div>
+
+          <!-- Interactive Input & Keypad -->
+          <div class="puzzle-input-section" id="puzzleInputSection">
+            
+            <div class="input-header-row">
+              <label for="customAnswerInput" class="input-header-label">
+                Select or type the missing single digit:
+              </label>
+              <div class="selected-digit-preview">
+                Your Answer: <span id="selectedDigitPreview" class="preview-number">?</span>
+              </div>
+            </div>
+
+            <!-- 0-9 Interactive Keypad -->
+            <div class="keypad-grid" id="keypadGrid">
+              <button type="button" class="keypad-btn" data-val="0">
+                <span class="key-digit">0</span>
+              </button>
+              <button type="button" class="keypad-btn" data-val="1">
+                <span class="key-digit">1</span>
+              </button>
+              <button type="button" class="keypad-btn" data-val="2">
+                <span class="key-digit">2</span>
+              </button>
+              <button type="button" class="keypad-btn" data-val="3">
+                <span class="key-digit">3</span>
+              </button>
+              <button type="button" class="keypad-btn" data-val="4">
+                <span class="key-digit">4</span>
+              </button>
+              <button type="button" class="keypad-btn" data-val="5">
+                <span class="key-digit">5</span>
+              </button>
+              <button type="button" class="keypad-btn" data-val="6">
+                <span class="key-digit">6</span>
+              </button>
+              <button type="button" class="keypad-btn" data-val="7">
+                <span class="key-digit">7</span>
+              </button>
+              <button type="button" class="keypad-btn" data-val="8">
+                <span class="key-digit">8</span>
+              </button>
+              <button type="button" class="keypad-btn" data-val="9">
+                <span class="key-digit">9</span>
+              </button>
+            </div>
+
+            <!-- Actions Row -->
+            <div class="puzzle-action-buttons">
+              <button id="submitPuzzleBtn" class="btn btn-primary btn-lg" disabled>
+                <span>✅</span> Submit Answer (Enter)
+              </button>
+              <button id="clearAnswerBtn" class="btn btn-secondary btn-lg" title="Clear selection">
+                <span>🧹</span> Clear
+              </button>
+            </div>
+
+            <div class="keypad-keyboard-hint">
+              💡 <span>Keyboard support enabled: Press numbers <strong>0-9</strong> on your keyboard &amp; <strong>Enter</strong> to submit!</span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- ========================================== -->
+    <!-- VIEW 2: LEADERBOARD -->
+    <!-- ========================================== -->
+    <section id="viewLeaderboard" class="view-section">
+      <div class="leaderboard-container">
+        
+        <div class="leaderboard-header">
+          <div>
+            <h2 class="leaderboard-title">
+              <span>🏆</span> Global Hall of Fame
+            </h2>
+            <p class="leaderboard-subtitle">
+              Top Banana Puzzle champions ranked by highest score, puzzles solved &amp; accuracy.
+            </p>
+          </div>
+          <button id="refreshLeaderboardBtn" class="btn btn-secondary btn-sm">
+            <span>🔄</span> Refresh Rankings
+          </button>
+        </div>
+
+        <!-- Leaderboard Filter Controls -->
+        <div class="leaderboard-filters-bar">
+          <div class="filter-group">
+            <label for="filterModeSelect">Mode:</label>
+            <select id="filterModeSelect" class="custom-select">
+              <option value="all">All Modes</option>
+              <option value="classic">Classic Arena</option>
+              <option value="time_challenge">Time Challenge</option>
+              <option value="practice">Practice Zen</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filterDifficultySelect">Difficulty:</label>
+            <select id="filterDifficultySelect" class="custom-select">
+              <option value="all">All Difficulties</option>
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Leaderboard Table -->
+        <div class="table-responsive">
+          <table class="leaderboard-table">
+            <thead>
+              <tr>
+                <th style="width: 80px;">Rank</th>
+                <th>Player</th>
+                <th>Score</th>
+                <th>Mode</th>
+                <th>Difficulty</th>
+                <th>Solved</th>
+                <th>Accuracy</th>
+                <th>Time</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboardTableBody">
+              <tr>
+                <td colspan="9" class="empty-state">
+                  <div class="spinner" style="margin: 0 auto 12px;"></div>
+                  Loading rankings...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- VIEW 3: ACHIEVEMENTS / BADGES -->
+    <!-- ========================================== -->
+    <section id="viewAchievements" class="view-section">
+      <div class="achievements-container">
+        
+        <div class="achievements-header">
+          <div>
+            <h2 class="leaderboard-title">
+              <span>🎖️</span> Tropical Achievements
+            </h2>
+            <p class="leaderboard-subtitle">
+              Accomplish special math milestones to unlock exclusive achievement badges and earn bonus prestige points!
+            </p>
+          </div>
+          <div class="achievements-progress-pill" id="achievementsProgressPill">
+            <span>Unlocked: 0 / 8</span>
+          </div>
+        </div>
+
+        <!-- Achievements Cards Grid -->
+        <div class="achievements-grid" id="achievementsGrid">
+          <div class="empty-state">
+            <div class="spinner" style="margin: 0 auto 12px;"></div>
+            Loading achievements...
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- VIEW 4: MY PROFILE & STATS -->
+    <!-- ========================================== -->
+    <section id="viewProfile" class="view-section">
+      <div class="profile-container">
+        
+        <!-- User Info Hero Banner -->
+        <div class="user-profile-hero" id="profileHeroBanner">
+          <div class="profile-avatar-info">
+            <div class="avatar-large" id="profileAvatarIcon" title="Click to choose avatar">🍌</div>
+            <div>
+              <div class="profile-title-row">
+                <h2 class="profile-username" id="profileUsername">Guest Player</h2>
+                <span class="user-rank-badge" id="profileRankBadge">Banana Novice</span>
+              </div>
+              <p class="profile-joined-text" id="profileStatusText">Log in to track your personal records, accuracy &amp; achievements.</p>
+            </div>
+          </div>
+
+          <div id="profileHeroActions">
+            <button id="profileAuthBtn" class="btn btn-primary btn-sm">Log In / Sign Up</button>
+          </div>
+        </div>
+
+        <!-- Avatar Picker Modal/Card (Interactive) -->
+        <div class="avatar-picker-panel" id="avatarPickerPanel" style="display: none;">
+          <h4 class="avatar-picker-title">Choose Your Tropical Avatar:</h4>
+          <div class="avatar-options-grid" id="avatarOptionsGrid">
+            <button type="button" class="avatar-opt-btn" data-avatar="🍌">🍌</button>
+            <button type="button" class="avatar-opt-btn" data-avatar="🐵">🐵</button>
+            <button type="button" class="avatar-opt-btn" data-avatar="🍍">🍍</button>
+            <button type="button" class="avatar-opt-btn" data-avatar="🥥">🥥</button>
+            <button type="button" class="avatar-opt-btn" data-avatar="🌴">🌴</button>
+            <button type="button" class="avatar-opt-btn" data-avatar="⚡">⚡</button>
+            <button type="button" class="avatar-opt-btn" data-avatar="👑">👑</button>
+            <button type="button" class="avatar-opt-btn" data-avatar="🚀">🚀</button>
+            <button type="button" class="avatar-opt-btn" data-avatar="🍉">🍉</button>
+            <button type="button" class="avatar-opt-btn" data-avatar="🎯">🎯</button>
+          </div>
+        </div>
+
+        <!-- Personal Records Summary Grid -->
+        <div class="profile-stats-grid">
+          
+          <div class="stat-card">
+            <span class="stat-icon">🎮</span>
+            <div class="stat-info">
+              <span class="stat-label">Games Played</span>
+              <span id="userTotalGames" class="stat-value">0</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <span class="stat-icon">⭐</span>
+            <div class="stat-info">
+              <span class="stat-label">Best Score</span>
+              <span id="userBestScore" class="stat-value highlight">0</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <span class="stat-icon">🍌</span>
+            <div class="stat-info">
+              <span class="stat-label">Puzzles Solved</span>
+              <span id="userTotalSolved" class="stat-value">0</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <span class="stat-icon">🎯</span>
+            <div class="stat-info">
+              <span class="stat-label">Overall Accuracy</span>
+              <span id="userAccuracy" class="stat-value highlight">0%</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <span class="stat-icon">🔥</span>
+            <div class="stat-info">
+              <span class="stat-label">Highest Streak</span>
+              <span id="userBestStreak" class="stat-value">0x</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <span class="stat-icon">⚡</span>
+            <div class="stat-info">
+              <span class="stat-label">Fastest Solve</span>
+              <span id="userFastestTime" class="stat-value">--:--</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Recent Game History Table -->
+        <div class="leaderboard-container" style="padding: 20px;">
+          <h3 style="font-family: var(--font-game); color: #fef08a; font-size: 1.3rem; margin-bottom: 14px;">
+            📜 Personal Match History
+          </h3>
+          <div class="table-responsive">
+            <table class="leaderboard-table">
+              <thead>
+                <tr>
+                  <th>Session #</th>
+                  <th>Mode</th>
+                  <th>Difficulty</th>
+                  <th>Score</th>
+                  <th>Puzzles Solved</th>
+                  <th>Accuracy</th>
+                  <th>Duration</th>
+                  <th>Played Date</th>
+                </tr>
+              </thead>
+              <tbody id="userHistoryTableBody">
+                <tr>
+                  <td colspan="8" class="empty-state">
+                    No games recorded yet. Play a round to record your stats!
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>
+        🍌 Banana Puzzle Game &bull; Powered by Banana API, PHP &amp; MySQL &bull; Enterprise Web Architecture
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: AUTHENTICATION (LOGIN / REGISTER) -->
+  <!-- ========================================== -->
+  <div id="authModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="authModalTitle" class="modal-title">Welcome to Banana Arena</h3>
+        <button id="closeAuthModalBtn" class="modal-close-btn" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Auth Tabs: Login vs Register -->
+        <div class="auth-tabs">
+          <button id="tabLoginBtn" class="auth-tab-btn active">Log In</button>
+          <button id="tabRegisterBtn" class="auth-tab-btn">Create Account</button>
+        </div>
+
+        <!-- Inline Alert / Error Notice -->
+        <div id="authAlert" class="puzzle-feedback-card" style="margin-bottom: 16px;"></div>
+
+        <!-- Login Form -->
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="loginUsername" class="form-label">Username</label>
+            <input type="text" id="loginUsername" class="form-input" placeholder="Enter your username" autocomplete="username" required>
+          </div>
+          <div class="form-group">
+            <label for="loginPassword" class="form-label">Password</label>
+            <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password" autocomplete="current-password" required>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;">
+            <span>🚀</span> Log In
+          </button>
+        </form>
+
+        <!-- Register Form -->
+        <form id="registerForm" style="display: none;">
+          <div class="form-group">
+            <label for="registerUsername" class="form-label">Choose Username</label>
+            <input type="text" id="registerUsername" class="form-input" placeholder="Letters, numbers and underscores" autocomplete="username" required minlength="3" maxlength="30">
+            <div class="form-helper">3-30 characters (alphanumeric &amp; underscore)</div>
+          </div>
+          <div class="form-group">
+            <label for="registerPassword" class="form-label">Create Password</label>
+            <input type="password" id="registerPassword" class="form-input" placeholder="At least 6 characters" autocomplete="new-password" required minlength="6">
+            <div class="form-helper">Minimum 6 characters</div>
+          </div>
+          <div class="form-group">
+            <label for="registerConfirmPassword" class="form-label">Confirm Password</label>
+            <input type="password" id="registerConfirmPassword" class="form-input" placeholder="Re-enter password" autocomplete="new-password" required minlength="6">
+          </div>
+          
+          <!-- Avatar Selection for Registration -->
+          <div class="form-group">
+            <label class="form-label">Pick Your Avatar</label>
+            <div class="avatar-options-grid" id="regAvatarGrid">
+              <button type="button" class="avatar-opt-btn active" data-avatar="🍌">🍌</button>
+              <button type="button" class="avatar-opt-btn" data-avatar="🐵">🐵</button>
+              <button type="button" class="avatar-opt-btn" data-avatar="🍍">🍍</button>
+              <button type="button" class="avatar-opt-btn" data-avatar="🥥">🥥</button>
+              <button type="button" class="avatar-opt-btn" data-avatar="🌴">🌴</button>
+              <button type="button" class="avatar-opt-btn" data-avatar="⚡">⚡</button>
+              <button type="button" class="avatar-opt-btn" data-avatar="👑">👑</button>
+              <button type="button" class="avatar-opt-btn" data-avatar="🚀">🚀</button>
+            </div>
+            <input type="hidden" id="registerAvatar" value="🍌">
+          </div>
+
+          <button type="submit" class="btn btn-green" style="width: 100%; margin-top: 8px;">
+            <span>✨</span> Create Account &amp; Play
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: VICTORY & GAME SUMMARY -->
+  <!-- ========================================== -->
+  <div id="resultsModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="resultsModalTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="resultsModalTitle" class="modal-title">🎉 Round Completed!</h3>
+        <button id="closeResultsModalBtn" class="modal-close-btn" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="victory-hero">
+          <div class="victory-trophy" id="resultsHeroIcon">🏆</div>
+          <h2 class="victory-title" id="resultsTitle">Banana Champion!</h2>
+          <p id="resultsSubtitle" style="color: #94a3b8; font-size: 0.95rem;">Awesome puzzle-solving performance!</p>
+        </div>
+
+        <!-- Performance Stats Grid -->
+        <div class="victory-stats-summary">
+          <div class="victory-stat-item">
+            <div class="victory-stat-title">Score</div>
+            <div id="resultsScore" class="victory-stat-num highlight">0</div>
+          </div>
+          <div class="victory-stat-item">
+            <div class="victory-stat-title">Solved</div>
+            <div id="resultsSolved" class="victory-stat-num">0 / 0</div>
+          </div>
+          <div class="victory-stat-item">
+            <div class="victory-stat-title">Accuracy</div>
+            <div id="resultsAccuracy" class="victory-stat-num">0%</div>
+          </div>
+          <div class="victory-stat-item">
+            <div class="victory-stat-title">Best Streak</div>
+            <div id="resultsStreak" class="victory-stat-num">0x</div>
+          </div>
+          <div class="victory-stat-item">
+            <div class="victory-stat-title">Duration</div>
+            <div id="resultsTime" class="victory-stat-num">00:00</div>
+          </div>
+          <div class="victory-stat-item">
+            <div class="victory-stat-title">Leaderboard</div>
+            <div id="resultsRank" class="victory-stat-num">#1</div>
+          </div>
+        </div>
+
+        <!-- Newly Unlocked Achievements Banner (if any) -->
+        <div id="resultsAchievementsSection" class="results-achievements-box" style="display: none;">
+          <h4>🎖️ New Achievements Unlocked!</h4>
+          <div id="resultsAchievementsList" class="results-achievements-list"></div>
+        </div>
+
+        <!-- Save Status Notice -->
+        <div id="resultsSaveStatus" style="font-size: 0.9rem; text-align: center; margin: 12px 0; color: #94a3b8;"></div>
+
+        <!-- Action Buttons -->
+        <div style="display: flex; gap: 10px; margin-top: 16px;">
+          <button id="resultsPlayAgainBtn" class="btn btn-primary" style="flex: 1;">
+            <span>🔄</span> Play Again
+          </button>
+          <button id="resultsLeaderboardBtn" class="btn btn-secondary" style="flex: 1;">
+            <span>🏆</span> Leaderboard
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- JavaScript Application -->
+  <script src="js/script.js"></script>
+</body>
+</html>
