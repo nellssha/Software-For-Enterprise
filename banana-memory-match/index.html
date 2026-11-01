@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banana Memory Match - The Ultimate Tropical Brain Challenge</title>
+  <meta name="description" content="Play Banana Memory Match! Flip cards, match tropical pairs, solve external Banana API puzzles, and top the leaderboard.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Confetti Canvas for Victory Celebrations -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <div class="app-container">
+    
+    <!-- Header & Navigation -->
+    <header class="app-header">
+      <a href="#" class="brand" id="brandHomeBtn">
+        <span class="brand-icon">🍌</span>
+        <div>
+          <span class="brand-title">Banana Match</span>
+          <span class="brand-badge">PRO</span>
+        </div>
+      </a>
+
+      <!-- Navigation Tabs -->
+      <nav>
+        <ul class="nav-tabs">
+          <li>
+            <button class="nav-tab-btn active" data-view="game">
+              <span>🎮</span> Play Game
+            </button>
+          </li>
+          <li>
+            <button class="nav-tab-btn" data-view="puzzle">
+              <span>🧩</span> Banana API Puzzle
+            </button>
+          </li>
+          <li>
+            <button class="nav-tab-btn" data-view="leaderboard">
+              <span>🏆</span> Leaderboard
+            </button>
+          </li>
+          <li>
+            <button class="nav-tab-btn" data-view="profile">
+              <span>👤</span> My Stats
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Action & Auth Nav Bar -->
+      <div class="header-actions">
+        <!-- Sound Effect Toggle -->
+        <button id="soundToggleBtn" class="sound-toggle-btn" title="Toggle Sound Effects" aria-label="Toggle Sound">
+          🔊
+        </button>
+
+        <!-- Auth Controls (Dynamically Updated) -->
+        <div id="authNavContainer" class="auth-nav-container">
+          <!-- Populated by JavaScript -->
+          <button id="openAuthModalBtn" class="btn btn-primary btn-sm">
+            <span>🔑</span> Login / Register
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ========================================== -->
+    <!-- VIEW 1: MEMORY MATCHING GAME -->
+    <!-- ========================================== -->
+    <main id="viewGame" class="view-section active">
+      <!-- Game Control & Status Bar -->
+      <div class="game-control-panel">
+        <div class="stats-grid">
+          <!-- Timer -->
+          <div class="stat-card">
+            <span class="stat-icon">⏱️</span>
+            <div class="stat-info">
+              <span class="stat-label">Time</span>
+              <span id="timerDisplay" class="stat-value">00:00</span>
+            </div>
+          </div>
+
+          <!-- Moves -->
+          <div class="stat-card">
+            <span class="stat-icon">🔄</span>
+            <div class="stat-info">
+              <span class="stat-label">Moves</span>
+              <span id="movesDisplay" class="stat-value">0</span>
+            </div>
+          </div>
+
+          <!-- Pairs Matched -->
+          <div class="stat-card">
+            <span class="stat-icon">🍌</span>
+            <div class="stat-info">
+              <span class="stat-label">Matched</span>
+              <span id="pairsDisplay" class="stat-value highlight">0 / 8</span>
+            </div>
+          </div>
+
+          <!-- Score Estimate -->
+          <div class="stat-card">
+            <span class="stat-icon">⭐</span>
+            <div class="stat-info">
+              <span class="stat-label">Est. Score</span>
+              <span id="scoreDisplay" class="stat-value">1,000</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controls: Difficulty & Restart -->
+        <div class="game-actions-group">
+          <div class="difficulty-select-wrap">
+            <label for="difficultySelect">Mode:</label>
+            <select id="difficultySelect" class="custom-select">
+              <option value="easy">Easy (6 Pairs)</option>
+              <option value="medium" selected>Medium (8 Pairs)</option>
+              <option value="hard">Hard (12 Pairs)</option>
+            </select>
+          </div>
+
+          <button id="restartGameBtn" class="btn btn-secondary">
+            <span>🔄</span> New Game
+          </button>
+        </div>
+      </div>
+
+      <!-- Memory Cards Grid Board -->
+      <div class="memory-board-wrap">
+        <div id="memoryBoard" class="memory-board grid-medium">
+          <!-- Dynamically populated cards -->
+        </div>
+      </div>
+    </main>
+
+    <!-- ========================================== -->
+    <!-- VIEW 2: BANANA API PUZZLE CHALLENGE -->
+    <!-- ========================================== -->
+    <section id="viewPuzzle" class="view-section">
+      <div class="puzzle-container">
+        <div class="puzzle-header">
+          <div class="puzzle-badge-pill">
+            <span>🌐</span> Connected to Banana API
+          </div>
+          <h2 class="puzzle-title">🍌 Banana API Puzzle Challenge</h2>
+          <p class="puzzle-subtitle">
+            Solve the external banana math puzzle below! Work out the missing single digit (0 to 9) and submit your solution for a <strong>+500 points</strong> bonus!
+          </p>
+        </div>
+
+        <!-- Puzzle Image Viewer -->
+        <div class="puzzle-image-box" id="puzzleImageBox">
+          <div class="puzzle-loading-state" id="puzzleLoadingState">
+            <div class="spinner"></div>
+            <p>Fetching puzzle from Banana API...</p>
+          </div>
+          <img id="puzzleImg" src="" alt="Banana Puzzle Challenge" style="display: none;">
+        </div>
+
+        <!-- Puzzle Feedback Card -->
+        <div id="puzzleFeedback" class="puzzle-feedback-card"></div>
+
+        <!-- Puzzle Input & Keypad -->
+        <div class="puzzle-input-section" id="puzzleInputSection">
+          <label style="font-weight: 600; color: #cbd5e1; font-size: 0.95rem;">
+            Select your answer (single digit 0 - 9):
+          </label>
+
+          <div class="keypad-grid" id="keypadGrid">
+            <button type="button" class="keypad-btn" data-val="0">0</button>
+            <button type="button" class="keypad-btn" data-val="1">1</button>
+            <button type="button" class="keypad-btn" data-val="2">2</button>
+            <button type="button" class="keypad-btn" data-val="3">3</button>
+            <button type="button" class="keypad-btn" data-val="4">4</button>
+            <button type="button" class="keypad-btn" data-val="5">5</button>
+            <button type="button" class="keypad-btn" data-val="6">6</button>
+            <button type="button" class="keypad-btn" data-val="7">7</button>
+            <button type="button" class="keypad-btn" data-val="8">8</button>
+            <button type="button" class="keypad-btn" data-val="9">9</button>
+          </div>
+
+          <div style="display: flex; gap: 12px; margin-top: 10px; width: 100%; max-width: 380px;">
+            <button id="submitPuzzleBtn" class="btn btn-primary" style="flex: 2;" disabled>
+              <span>✅</span> Submit Answer
+            </button>
+            <button id="refreshPuzzleBtn" class="btn btn-secondary" style="flex: 1;" title="Get another puzzle">
+              <span>🔄</span> New
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- VIEW 3: LEADERBOARD -->
+    <!-- ========================================== -->
+    <section id="viewLeaderboard" class="view-section">
+      <div class="leaderboard-container">
+        <div class="leaderboard-header">
+          <div>
+            <h2 class="leaderboard-title">
+              <span>🏆</span> Global Hall of Fame
+            </h2>
+            <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 4px;">
+              Top players ranked by highest score and fastest completion time.
+            </p>
+          </div>
+          <button id="refreshLeaderboardBtn" class="btn btn-secondary btn-sm">
+            <span>🔄</span> Refresh Rankings
+          </button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="leaderboard-table">
+            <thead>
+              <tr>
+                <th style="width: 100px;">Rank</th>
+                <th>Player</th>
+                <th>Score</th>
+                <th>Time</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboardTableBody">
+              <!-- Dynamically populated -->
+              <tr>
+                <td colspan="5" class="empty-state">
+                  <div class="spinner" style="margin: 0 auto 12px;"></div>
+                  Loading leaderboard...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- VIEW 4: MY STATS & HISTORY -->
+    <!-- ========================================== -->
+    <section id="viewProfile" class="view-section">
+      <div class="profile-container">
+        <!-- User Info Hero Banner -->
+        <div class="user-profile-hero" id="profileHeroBanner">
+          <div class="profile-avatar-info">
+            <div class="avatar-large" id="profileAvatarIcon">🍌</div>
+            <div>
+              <h2 class="profile-username" id="profileUsername">Guest Player</h2>
+              <p class="profile-joined-text" id="profileStatusText">Log in to track your personal records across sessions.</p>
+            </div>
+          </div>
+          <div id="profileHeroActions">
+            <button id="profileAuthBtn" class="btn btn-primary btn-sm">Log In / Sign Up</button>
+          </div>
+        </div>
+
+        <!-- Personal Records Summary Grid -->
+        <div class="profile-stats-grid">
+          <div class="stat-card">
+            <span class="stat-icon">🎮</span>
+            <div class="stat-info">
+              <span class="stat-label">Games Played</span>
+              <span id="userTotalGames" class="stat-value">0</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <span class="stat-icon">⭐</span>
+            <div class="stat-info">
+              <span class="stat-label">Best Score</span>
+              <span id="userBestScore" class="stat-value highlight">0</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <span class="stat-icon">⚡</span>
+            <div class="stat-info">
+              <span class="stat-label">Fastest Time</span>
+              <span id="userFastestTime" class="stat-value">--:--</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <span class="stat-icon">📊</span>
+            <div class="stat-info">
+              <span class="stat-label">Average Score</span>
+              <span id="userAvgScore" class="stat-value">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Match History Table -->
+        <div class="leaderboard-container" style="padding: 20px;">
+          <h3 style="font-family: var(--font-game); color: #fef08a; font-size: 1.3rem; margin-bottom: 14px;">
+            📜 Recent Game History
+          </h3>
+          <div class="table-responsive">
+            <table class="leaderboard-table">
+              <thead>
+                <tr>
+                  <th>Game #</th>
+                  <th>Score</th>
+                  <th>Completion Time</th>
+                  <th>Played Date</th>
+                </tr>
+              </thead>
+              <tbody id="userHistoryTableBody">
+                <tr>
+                  <td colspan="4" class="empty-state">
+                    No games recorded yet. Play a match to see your score history!
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>
+        Banana Memory Match &bull; Enterprise Web Application &bull; Built with PHP, MySQL & Banana API
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: AUTHENTICATION (LOGIN / REGISTER) -->
+  <!-- ========================================== -->
+  <div id="authModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="authModalTitle" class="modal-title">Welcome to Banana Match</h3>
+        <button id="closeAuthModalBtn" class="modal-close-btn" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Auth Tabs: Login vs Register -->
+        <div class="auth-tabs">
+          <button id="tabLoginBtn" class="auth-tab-btn active">Log In</button>
+          <button id="tabRegisterBtn" class="auth-tab-btn">Create Account</button>
+        </div>
+
+        <!-- Inline Alert / Error Notice -->
+        <div id="authAlert" class="puzzle-feedback-card" style="margin-bottom: 16px;"></div>
+
+        <!-- Login Form -->
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="loginUsername" class="form-label">Username</label>
+            <input type="text" id="loginUsername" class="form-input" placeholder="Enter your username" autocomplete="username" required>
+          </div>
+          <div class="form-group">
+            <label for="loginPassword" class="form-label">Password</label>
+            <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password" autocomplete="current-password" required>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 8px;">
+            <span>🚀</span> Log In
+          </button>
+        </form>
+
+        <!-- Register Form -->
+        <form id="registerForm" style="display: none;">
+          <div class="form-group">
+            <label for="registerUsername" class="form-label">Choose Username</label>
+            <input type="text" id="registerUsername" class="form-input" placeholder="Letters, numbers and underscores" autocomplete="username" required minlength="3" maxlength="30">
+            <div class="form-helper">3-30 characters (alphanumeric & underscore)</div>
+          </div>
+          <div class="form-group">
+            <label for="registerPassword" class="form-label">Create Password</label>
+            <input type="password" id="registerPassword" class="form-input" placeholder="At least 6 characters" autocomplete="new-password" required minlength="6">
+            <div class="form-helper">Minimum 6 characters</div>
+          </div>
+          <div class="form-group">
+            <label for="registerConfirmPassword" class="form-label">Confirm Password</label>
+            <input type="password" id="registerConfirmPassword" class="form-input" placeholder="Re-enter password" autocomplete="new-password" required minlength="6">
+          </div>
+          <button type="submit" class="btn btn-green" style="width: 100%; margin-top: 8px;">
+            <span>✨</span> Create My Account
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: VICTORY & GAME SUMMARY -->
+  <!-- ========================================== -->
+  <div id="victoryModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="victoryModalTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="victoryModalTitle" class="modal-title">🎉 Round Completed!</h3>
+        <button id="closeVictoryModalBtn" class="modal-close-btn" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="victory-hero">
+          <div class="victory-trophy">🏆</div>
+          <h2 class="victory-title">Banana Master!</h2>
+          <p style="color: #94a3b8; font-size: 0.95rem;">You successfully matched all the pairs!</p>
+        </div>
+
+        <!-- Performance Stats -->
+        <div class="victory-stats-summary">
+          <div class="victory-stat-item">
+            <div class="victory-stat-title">Time</div>
+            <div id="victoryTime" class="victory-stat-num">00:00</div>
+          </div>
+          <div class="victory-stat-item">
+            <div class="victory-stat-title">Moves</div>
+            <div id="victoryMoves" class="victory-stat-num">0</div>
+          </div>
+          <div class="victory-stat-item">
+            <div class="victory-stat-title">Score</div>
+            <div id="victoryScore" class="victory-stat-num" style="color: var(--banana-yellow);">0</div>
+          </div>
+        </div>
+
+        <!-- Banana API Puzzle Bonus Callout -->
+        <div class="bonus-callout-box" id="victoryBonusCallout">
+          <div class="bonus-callout-icon">🧩</div>
+          <div class="bonus-callout-text">
+            <h4>Bonus Challenge Available!</h4>
+            <p>Solve an external Banana API puzzle right now to boost your score by <strong>+500 points</strong>!</p>
+          </div>
+        </div>
+
+        <!-- Save Status Notice -->
+        <div id="victorySaveStatus" style="font-size: 0.9rem; text-align: center; margin: 12px 0; color: #94a3b8;"></div>
+
+        <!-- Action Buttons -->
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 16px;">
+          <button id="victoryBonusBtn" class="btn btn-primary" style="width: 100%;">
+            <span>🍌</span> Solve Banana API Puzzle (+500 pts)
+          </button>
+          
+          <div style="display: flex; gap: 10px;">
+            <button id="victorySaveBtn" class="btn btn-green" style="flex: 1;">
+              <span>💾</span> Save Score
+            </button>
+            <button id="victoryPlayAgainBtn" class="btn btn-secondary" style="flex: 1;">
+              <span>🔄</span> Play Again
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- JavaScript Application -->
+  <script src="js/script.js"></script>
+</body>
+</html>
