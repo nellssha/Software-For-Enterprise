@@ -6,6 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/jwt.php';
 
 $action = $_GET['action'] ?? ($_POST['action'] ?? '');
 
@@ -33,13 +34,15 @@ if (empty($action) && isset($params['action'])) {
 
 switch ($action) {
     case 'status':
-        if (!empty($_SESSION['user_id'])) {
+        $authUser = get_authenticated_user();
+        if ($authUser) {
             sendResponse([
                 'success' => true,
                 'loggedIn' => true,
+                'auth_type' => $authUser['auth_type'] ?? 'jwt',
                 'user' => [
-                    'id' => $_SESSION['user_id'],
-                    'username' => $_SESSION['username']
+                    'id' => $authUser['id'],
+                    'username' => $authUser['username']
                 ]
             ]);
         } else {
@@ -89,14 +92,21 @@ switch ($action) {
             $userId = $insertStmt->insert_id;
             $insertStmt->close();
 
-            // Log user in
+            // Set session for legacy fallback
             session_regenerate_id(true);
             $_SESSION['user_id'] = $userId;
             $_SESSION['username'] = $username;
 
+            // Generate JWT Token
+            $jwtToken = jwt_encode([
+                'sub' => $userId,
+                'username' => $username
+            ]);
+
             sendResponse([
                 'success' => true,
                 'message' => 'Registration successful! Welcome, ' . $username . '.',
+                'token' => $jwtToken,
                 'user' => [
                     'id' => $userId,
                     'username' => $username
@@ -128,11 +138,18 @@ switch ($action) {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
 
+                // Generate JWT Token
+                $jwtToken = jwt_encode([
+                    'sub' => (int)$user['id'],
+                    'username' => $user['username']
+                ]);
+
                 sendResponse([
                     'success' => true,
                     'message' => 'Login successful! Welcome back, ' . $user['username'] . '.',
+                    'token' => $jwtToken,
                     'user' => [
-                        'id' => $user['id'],
+                        'id' => (int)$user['id'],
                         'username' => $user['username']
                     ]
                 ]);

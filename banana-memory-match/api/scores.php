@@ -6,6 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/jwt.php';
 
 $action = $_GET['action'] ?? ($_POST['action'] ?? 'leaderboard');
 
@@ -28,7 +29,9 @@ if (isset($params['action']) && !empty($params['action'])) {
     $action = $params['action'];
 }
 
-$currentUserId = $_SESSION['user_id'] ?? null;
+// Extract identity from JWT Bearer token or session
+$authUser = get_authenticated_user();
+$currentUserId = $authUser ? (int)$authUser['id'] : null;
 
 switch ($action) {
     case 'save':
@@ -68,7 +71,8 @@ switch ($action) {
                 'score_id' => $scoreId,
                 'rank' => (int)$userRank,
                 'score' => $score,
-                'completion_time' => $completionTime
+                'completion_time' => $completionTime,
+                'auth_type' => $authUser['auth_type'] ?? 'jwt'
             ], 201);
         } else {
             $stmt->close();
