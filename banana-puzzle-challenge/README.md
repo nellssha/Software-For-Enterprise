@@ -1,4 +1,4 @@
-# 🍌 Banana Puzzle Arena
+# Banana Puzzle Arena
 
 **Banana Puzzle Arena** is a full-stack, enterprise-grade mathematical puzzle web application built with **HTML5**, **CSS3**, **JavaScript (ES6+)**, **PHP 8**, **MySQL**, and the **Banana API**.
 
@@ -6,7 +6,7 @@ The application centers around solving tropical visual math equations in real-ti
 
 ---
 
-## 🌟 Application Concept & Architecture
+## Application Concept & Architecture
 
 Imagine a player opens the application:
 1. They register or log in (or play as a guest).
@@ -16,7 +16,7 @@ Imagine a player opens the application:
 
 ---
 
-## 🎮 Key Features
+## Key Features
 
 ### A. Core Puzzle Gameplay
 - **Banana Puzzle Retrieval**:
@@ -31,9 +31,9 @@ Imagine a player opens the application:
   - Immediate tactile feedback (green glow + fanfare on correct; shake + low buzz on wrong).
   - Resubmission lock preventing repeated answers to the same puzzle.
 - **Difficulty Settings**:
-  - 🟢 **Easy**: 45s countdown timer per puzzle, 5 lives, 1 retry allowed on incorrect answers, 1.0x score multiplier.
-  - 🟡 **Medium**: 30s countdown timer per puzzle, 3 lives, standard rules, 1.5x score multiplier.
-  - 🔴 **Hard**: 15s countdown timer per puzzle, 2 lives, strict scoring, 2.0x score multiplier.
+  -**Easy**: 45s countdown timer per puzzle, 5 lives, 1 retry allowed on incorrect answers, 1.0x score multiplier.
+  -**Medium**: 30s countdown timer per puzzle, 3 lives, standard rules, 1.5x score multiplier.
+  -**Hard**: 15s countdown timer per puzzle, 2 lives, strict scoring, 2.0x score multiplier.
 - **Scoring & Combo System**:
   - Base points according to difficulty (100 / 150 / 200 pts).
   - **Speed Bonus**: Answering quickly awards up to +100 bonus points.
@@ -41,7 +41,7 @@ Imagine a player opens the application:
   - **Attempt Multiplier**: First-attempt correct solutions earn maximum points.
 - **Timer & Lives**:
   - Circular and linear animated countdown timers with pulsating red low-time warnings when under 5 seconds.
-  - Visual lives system (❤️ ❤️ ❤️) that shatters/dims upon mistakes or timeouts.
+  - Visual lives system that shatters/dims upon mistakes or timeouts.
   - Game over triggers when time expires or all lives are spent.
 - **Game Results Summary**:
   - Detailed summary modal displaying Total Score, Puzzles Solved vs Attempted, Accuracy %, Highest Streak, Completion Duration, and Global Rank.
@@ -54,28 +54,28 @@ Imagine a player opens the application:
 ### C. Player Accounts & Performance Tracking
 - User registration and login with secure password hashing (`password_hash()`, Bcrypt/Argon2).
 - Session and JSON Web Token (JWT RFC 7519) authentication.
-- Customizable tropical player avatars (🍌, 🐵, 🍍, 🥥, 🌴, ⚡, 👑, 🚀, 🍉, 🎯).
+- Customizable tropical player avatars.
 - Personal statistics dashboard: Total Games Played, Best Score, Total Puzzles Solved, Overall Accuracy %, Highest Streak, and Fastest Solve Time.
 - Personal Match History table recording mode, difficulty, score, accuracy, duration, and date.
 
 ### D. Global Leaderboard & Achievements
 - **Global Hall of Fame**:
   - Filterable by Game Mode (All, Classic, Time Challenge, Practice) and Difficulty (All, Easy, Medium, Hard).
-  - Displays Rank (🥇 🥈 🥉 for top 3), Player Avatar, Username, Score, Mode, Difficulty, Puzzles Solved, Accuracy, and Date.
+  - Displays Rank, Player Avatar, Username, Score, Mode, Difficulty, Puzzles Solved, Accuracy, and Date.
 - **Achievement Badges**:
-  - 🍌 **First Banana**: Solve your very first Banana API puzzle.
-  - 🔥 **Streak Master**: Answer 5 puzzles correctly in a row.
-  - 🌴 **Banana Collector**: Solve 10 total puzzles.
-  - ⚡ **Speed Demon**: Solve a puzzle correctly in under 5 seconds.
-  - ✨ **Flawless Mind**: Complete a session with 100% accuracy.
-  - 👑 **Tropical Champion**: Score 1,500+ points in a single session.
-  - ⏱️ **Clock Stopper**: Complete a Time Challenge session.
-  - 🧠 **Banana Einstein**: Solve 50 puzzles across all sessions.
+  -**First Banana**: Solve your very first Banana API puzzle.
+  -**Streak Master**: Answer 5 puzzles correctly in a row.
+  -**Banana Collector**: Solve 10 total puzzles.
+  -**Speed Demon**: Solve a puzzle correctly in under 5 seconds.
+  -**Flawless Mind**: Complete a session with 100% accuracy.
+  -**Tropical Champion**: Score 1,500+ points in a single session.
+  -**Clock Stopper**: Complete a Time Challenge session.
+  -**Banana Einstein**: Solve 50 puzzles across all sessions.
 - In-game celebratory notifications and confetti bursts whenever a new achievement is unlocked.
 
 ---
 
-## 🗄️ Database Architecture
+## Database Architecture
 
 Database name: `banana_memory_match`
 
@@ -175,7 +175,7 @@ Stores unlocked achievements for each player.
 
 ---
 
-## 🛠️ Technical Stack
+## Technical Stack
 
 | Technology | Purpose |
 |---|---|
@@ -190,7 +190,7 @@ Stores unlocked achievements for each player.
 
 ---
 
-## 🚀 How to Run Locally
+## How to Run Locally
 
 1. Start **Apache** and **MySQL** in **XAMPP Control Panel**.
 2. Run database initialization script (or import schema):
