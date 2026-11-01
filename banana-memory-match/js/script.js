@@ -256,14 +256,37 @@ const app = {
 // AUTHENTICATION MODULE
 // ===================================================================
 const AuthManager = {
+  getToken() {
+    return localStorage.getItem('banana_jwt_token');
+  },
+
+  setToken(token) {
+    if (token) {
+      localStorage.setItem('banana_jwt_token', token);
+    } else {
+      localStorage.removeItem('banana_jwt_token');
+    }
+  },
+
+  getAuthHeaders(customHeaders = {}) {
+    const headers = { ...customHeaders };
+    const token = this.getToken();
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+    return headers;
+  },
+
   async checkSession() {
     try {
-      const res = await fetch(`${API_BASE}/auth.php?action=status`);
+      const headers = this.getAuthHeaders();
+      const res = await fetch(`${API_BASE}/auth.php?action=status`, { headers });
       const data = await res.json();
       if (data.success && data.loggedIn) {
         app.currentUser = data.user;
       } else {
         app.currentUser = null;
+        this.setToken(null);
       }
       this.updateUI();
     } catch (err) {
@@ -282,6 +305,9 @@ const AuthManager = {
       });
       const data = await res.json();
       if (data.success) {
+        if (data.token) {
+          this.setToken(data.token);
+        }
         app.currentUser = data.user;
         this.updateUI();
         UIManager.closeModal('authModal');
@@ -306,6 +332,9 @@ const AuthManager = {
       });
       const data = await res.json();
       if (data.success) {
+        if (data.token) {
+          this.setToken(data.token);
+        }
         app.currentUser = data.user;
         this.updateUI();
         UIManager.closeModal('authModal');
@@ -323,16 +352,17 @@ const AuthManager = {
 
   async logout() {
     try {
-      const res = await fetch(`${API_BASE}/auth.php?action=logout`, { method: 'POST' });
-      const data = await res.json();
-      app.currentUser = null;
-      this.updateUI();
-      showToast('You have logged out.', 'info');
-      ScoreManager.loadLeaderboard();
-      ScoreManager.loadUserHistory();
+      const headers = this.getAuthHeaders();
+      await fetch(`${API_BASE}/auth.php?action=logout`, { method: 'POST', headers });
     } catch (err) {
       console.error('Logout error:', err);
     }
+    this.setToken(null);
+    app.currentUser = null;
+    this.updateUI();
+    showToast('You have logged out.', 'info');
+    ScoreManager.loadLeaderboard();
+    ScoreManager.loadUserHistory();
   },
 
   updateUI() {

@@ -6,12 +6,13 @@ Banana Memory Match is a full-stack, tropical-themed web-based memory matching g
 
 ## 🌟 Features Overview
 
-### 1. User Authentication
+### 1. User Authentication (JWT & Session Hybrid)
 - **User Registration**: Create accounts with username and secure password validation.
-- **User Login**: Session-based login with hashed password verification (`password_verify()`).
-- **Security**: Industry-standard `password_hash()` (Bcrypt/Argon2) encryption and SQL injection prevention via parameterized prepared statements (`mysqli`).
-- **Session Persistence**: Maintains user login status with secure session handling and cookie management.
-- **Logout**: Seamlessly terminates sessions and clears state.
+- **User Login**: Authenticate with hashed password verification (`password_verify()`).
+- **JSON Web Tokens (JWT - RFC 7519)**: Emits cryptographically signed HS256 tokens upon login and registration. Client transmits tokens via `Authorization: Bearer <token>` headers for modern stateless authentication.
+- **Security**: Industry-standard `password_hash()` (Bcrypt/Argon2) encryption, timing-safe signature comparison (`hash_equals()`), and SQL injection prevention via parameterized prepared statements (`mysqli`).
+- **Session Persistence**: Maintains user login status across page reloads via dual JWT local storage and secure session cookies.
+- **Logout**: Seamlessly terminates sessions, wipes JWT local storage, and clears cookies.
 
 ### 2. Interactive Memory Matching Game
 - **Tropical Theme**: Cards featuring Bananas (🍌), Monkeys (🐵), Palm Trees (🌴), Coconuts (🥥), Pineapples (🍍), Smoothies (🍹), Banana Splits (🍨), Banana Bread (🍰), and more.
@@ -74,17 +75,17 @@ Database name: `banana_memory_match`
 
 ## 🔌 API Endpoints Reference
 
-| Endpoint | Method | Action | Description |
-|---|---|---|---|
-| `api/auth.php?action=status` | GET | `status` | Returns current session login status |
-| `api/auth.php?action=register` | POST | `register` | Creates a new user account |
-| `api/auth.php?action=login` | POST | `login` | Authenticates existing user |
-| `api/auth.php?action=logout` | POST | `logout` | Ends user session |
-| `api/puzzle.php?action=get` | GET | `get` | Fetches Banana puzzle image URL |
-| `api/puzzle.php?action=verify` | POST | `verify` | Validates answer (0-9) and awards bonus |
-| `api/scores.php?action=leaderboard` | GET | `leaderboard` | Retrieves top ranked scores |
-| `api/scores.php?action=user_scores` | GET | `user_scores` | Retrieves logged-in user's history & stats |
-| `api/scores.php?action=save` | POST | `save` | Saves player score and completion time |
+| Endpoint | Method | Auth Header | Action | Description |
+|---|---|---|---|---|
+| `api/auth.php?action=status` | GET | Optional `Bearer <token>` | `status` | Returns current session & JWT login status |
+| `api/auth.php?action=register` | POST | None | `register` | Creates a new user account & returns JWT token |
+| `api/auth.php?action=login` | POST | None | `login` | Authenticates existing user & returns JWT token |
+| `api/auth.php?action=logout` | POST | Optional `Bearer <token>` | `logout` | Ends user session & invalidates client token |
+| `api/puzzle.php?action=get` | GET | None | `get` | Fetches Banana puzzle image URL |
+| `api/puzzle.php?action=verify` | POST | None | `verify` | Validates answer (0-9) and awards bonus |
+| `api/scores.php?action=leaderboard` | GET | Optional `Bearer <token>` | `leaderboard` | Retrieves top ranked scores |
+| `api/scores.php?action=user_scores` | GET | Required `Bearer <token>` | `user_scores` | Retrieves logged-in user's history & stats |
+| `api/scores.php?action=save` | POST | Required `Bearer <token>` | `save` | Saves player score and completion time |
 
 ---
 
