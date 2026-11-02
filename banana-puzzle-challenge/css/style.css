@@ -901,9 +901,40 @@ body::after {
 }
 
 .selected-digit-preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 0.95rem;
   color: #cbd5e1;
   font-weight: 600;
+}
+
+.custom-digit-input {
+  width: 44px;
+  height: 40px;
+  background: rgba(250, 204, 21, 0.2);
+  color: var(--banana-yellow);
+  border: 2px solid rgba(250, 204, 21, 0.5);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-game);
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-align: center;
+  outline: none;
+  transition: all 0.2s ease;
+  -moz-appearance: textfield;
+}
+
+.custom-digit-input::-webkit-outer-spin-button,
+.custom-digit-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.custom-digit-input:focus {
+  border-color: #ffffff;
+  background: rgba(250, 204, 21, 0.35);
+  box-shadow: 0 0 10px rgba(250, 204, 21, 0.5);
 }
 
 .preview-number {

@@ -61,6 +61,100 @@ const MODE_CONFIG = {
   }
 };
 
+// Built-in client-side fallback puzzles (zero-downtime safety)
+const CLIENT_FALLBACK_PUZZLES = [
+  {
+    puzzle_id: 'client_fallback_1',
+    solution: 5,
+    question: 'data:image/svg+xml;utf8,' + encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" width="600" height="280" viewBox="0 0 600 280">
+        <rect width="100%" height="100%" fill="#fff9db" rx="16" />
+        <rect x="10" y="10" width="580" height="260" fill="none" stroke="#f59f00" stroke-width="3" stroke-dasharray="8 6" rx="12"/>
+        <text x="300" y="45" font-size="22" font-weight="bold" fill="#7950f2" text-anchor="middle" font-family="sans-serif">🍌 BANANA MATH PUZZLE 🍌</text>
+        <g font-size="26" font-family="sans-serif" font-weight="bold" fill="#333">
+          <text x="80" y="95">🍌  +  🍌  =  6</text>
+          <text x="80" y="145">🍌  +  🌴  =  8</text>
+          <text x="80" y="195">🌴  +  🥥  =  7</text>
+          <rect x="60" y="215" width="480" height="45" fill="#ffd43b" rx="8"/>
+          <text x="80" y="247" fill="#1e293b" font-size="26">🍌  +  🥥  =  <tspan fill="#d9480f" font-size="30">?</tspan></text>
+        </g>
+      </svg>
+    `)
+  },
+  {
+    puzzle_id: 'client_fallback_2',
+    solution: 3,
+    question: 'data:image/svg+xml;utf8,' + encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" width="600" height="280" viewBox="0 0 600 280">
+        <rect width="100%" height="100%" fill="#f8fafc" rx="16" />
+        <rect x="10" y="10" width="580" height="260" fill="none" stroke="#eab308" stroke-width="3" stroke-dasharray="8 6" rx="12"/>
+        <text x="300" y="45" font-size="22" font-weight="bold" fill="#0284c7" text-anchor="middle" font-family="sans-serif">🍌 BANANA MATH PUZZLE 🍌</text>
+        <g font-size="26" font-family="sans-serif" font-weight="bold" fill="#333">
+          <text x="80" y="95">🐵  +  🐵  =  8</text>
+          <text x="80" y="145">🐵  +  🍌  =  7</text>
+          <text x="80" y="195">🍌  +  🍍  =  9</text>
+          <rect x="60" y="215" width="480" height="45" fill="#fde047" rx="8"/>
+          <text x="80" y="247" fill="#1e293b" font-size="26">🍍  -  🍌  =  <tspan fill="#dc2626" font-size="30">?</tspan></text>
+        </g>
+      </svg>
+    `)
+  },
+  {
+    puzzle_id: 'client_fallback_3',
+    solution: 6,
+    question: 'data:image/svg+xml;utf8,' + encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" width="600" height="280" viewBox="0 0 600 280">
+        <rect width="100%" height="100%" fill="#fffbeb" rx="16" />
+        <rect x="10" y="10" width="580" height="260" fill="none" stroke="#f59e0b" stroke-width="3" stroke-dasharray="8 6" rx="12"/>
+        <text x="300" y="45" font-size="22" font-weight="bold" fill="#15803d" text-anchor="middle" font-family="sans-serif">🍌 BANANA MATH PUZZLE 🍌</text>
+        <g font-size="26" font-family="sans-serif" font-weight="bold" fill="#333">
+          <text x="80" y="95">🍌  ×  2  =  8</text>
+          <text x="80" y="145">🍌  +  🍹  =  9</text>
+          <text x="80" y="195">🍹  -  🥥  =  3</text>
+          <rect x="60" y="215" width="480" height="45" fill="#fef08a" rx="8"/>
+          <text x="80" y="247" fill="#1e293b" font-size="26">🥥  ×  3  =  <tspan fill="#b91c1c" font-size="30">?</tspan></text>
+        </g>
+      </svg>
+    `)
+  },
+  {
+    puzzle_id: 'client_fallback_4',
+    solution: 8,
+    question: 'data:image/svg+xml;utf8,' + encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" width="600" height="280" viewBox="0 0 600 280">
+        <rect width="100%" height="100%" fill="#f0fdf4" rx="16" />
+        <rect x="10" y="10" width="580" height="260" fill="none" stroke="#22c55e" stroke-width="3" stroke-dasharray="8 6" rx="12"/>
+        <text x="300" y="45" font-size="22" font-weight="bold" fill="#15803d" text-anchor="middle" font-family="sans-serif">🍌 TROPICAL MATH ARENA 🍌</text>
+        <g font-size="26" font-family="sans-serif" font-weight="bold" fill="#333">
+          <text x="80" y="95">🍍  +  🍍  =  14</text>
+          <text x="80" y="145">🍍  -  🍌  =  5</text>
+          <text x="80" y="195">🍌  ×  🥥  =  8</text>
+          <rect x="60" y="215" width="480" height="45" fill="#bbf7d0" rx="8"/>
+          <text x="80" y="247" fill="#14532d" font-size="26">🥥  ×  2  =  <tspan fill="#b91c1c" font-size="30">?</tspan></text>
+        </g>
+      </svg>
+    `)
+  },
+  {
+    puzzle_id: 'client_fallback_5',
+    solution: 2,
+    question: 'data:image/svg+xml;utf8,' + encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" width="600" height="280" viewBox="0 0 600 280">
+        <rect width="100%" height="100%" fill="#fef2f2" rx="16" />
+        <rect x="10" y="10" width="580" height="260" fill="none" stroke="#ef4444" stroke-width="3" stroke-dasharray="8 6" rx="12"/>
+        <text x="300" y="45" font-size="22" font-weight="bold" fill="#b91c1c" text-anchor="middle" font-family="sans-serif">🍌 BANANA SPEED PUZZLE 🍌</text>
+        <g font-size="26" font-family="sans-serif" font-weight="bold" fill="#333">
+          <text x="80" y="95">🍌  +  🍌  +  🍌  =  9</text>
+          <text x="80" y="145">🍉  -  🍌  =  4</text>
+          <text x="80" y="195">🍉  -  🥥  =  5</text>
+          <rect x="60" y="215" width="480" height="45" fill="#fecaca" rx="8"/>
+          <text x="80" y="247" fill="#7f1d1d" font-size="26">🥥  =  <tspan fill="#b91c1c" font-size="30">?</tspan></text>
+        </g>
+      </svg>
+    `)
+  }
+];
+
 // ===================================================================
 // SOUND MANAGER (Web Audio API Synthesizer)
 // ===================================================================
@@ -523,12 +617,22 @@ const BananaGame = {
   },
 
   bindLobbyControls() {
-    // Mode Card Selection
+    // Mode Card Selection & Direct Play
     const modeCards = document.querySelectorAll('.mode-card');
     modeCards.forEach(card => {
-      card.addEventListener('click', () => {
+      card.addEventListener('click', (e) => {
         const mode = card.getAttribute('data-mode') || 'classic';
         this.selectMode(mode);
+        // If the play button inside the card was clicked, immediately start
+        if (e.target.closest('.mode-card-play-btn')) {
+          e.stopPropagation();
+          this.startRound(mode, this.difficulty);
+        }
+      });
+
+      card.addEventListener('dblclick', () => {
+        const mode = card.getAttribute('data-mode') || 'classic';
+        this.startRound(mode, this.difficulty);
       });
     });
 
@@ -543,7 +647,8 @@ const BananaGame = {
     // Start Button
     const startBtn = document.getElementById('startGameBtn');
     if (startBtn) {
-      startBtn.addEventListener('click', () => {
+      startBtn.addEventListener('click', (e) => {
+        e.preventDefault();
         this.startRound(this.mode, this.difficulty);
       });
     }
@@ -568,21 +673,61 @@ const BananaGame = {
   },
 
   bindKeypad() {
+    // 1. On-Screen Keypad Buttons (0-9)
     const keys = document.querySelectorAll('.keypad-btn');
     keys.forEach(btn => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
         if (this.status !== 'playing' || this.isSubmitting) return;
         const val = parseInt(btn.getAttribute('data-val'), 10);
         this.selectDigit(val);
       });
     });
 
-    // Physical Keyboard Support
+    // 2. Direct Typing in #customAnswerInput
+    const customInput = document.getElementById('customAnswerInput');
+    if (customInput) {
+      customInput.addEventListener('input', () => {
+        if (this.status !== 'playing' || this.isSubmitting) return;
+        const raw = customInput.value.trim();
+        if (raw === '') {
+          this.clearSelection(false);
+          return;
+        }
+        // Take the latest entered character if multiple digits typed
+        const lastChar = raw.slice(-1);
+        const digit = parseInt(lastChar, 10);
+        if (!isNaN(digit) && digit >= 0 && digit <= 9) {
+          this.selectDigit(digit);
+        } else {
+          customInput.value = this.selectedAnswer !== null ? this.selectedAnswer : '';
+        }
+      });
+
+      customInput.addEventListener('keydown', (e) => {
+        if (this.status !== 'playing' || this.isSubmitting) return;
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          if (this.selectedAnswer !== null) {
+            this.submitAnswer();
+          }
+        } else if (e.key === 'Escape') {
+          e.preventDefault();
+          this.clearSelection();
+        }
+      });
+    }
+
+    // 3. Physical Keyboard Support anywhere on page
     window.addEventListener('keydown', (e) => {
       if (this.status !== 'playing' || this.isSubmitting) return;
 
-      // Ignore if user is typing inside an input element (like modal)
-      if (e.target && ['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
+      // Ignore if user is typing in modal inputs (e.g., login/register)
+      if (e.target && ['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+        if (e.target.id !== 'customAnswerInput') {
+          return;
+        }
+      }
 
       if (e.key >= '0' && e.key <= '9') {
         const val = parseInt(e.key, 10);
@@ -600,7 +745,10 @@ const BananaGame = {
     // Clear Button
     const clearBtn = document.getElementById('clearAnswerBtn');
     if (clearBtn) {
-      clearBtn.addEventListener('click', () => this.clearSelection());
+      clearBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        this.clearSelection();
+      });
     }
   },
 
@@ -688,7 +836,13 @@ const BananaGame = {
       }
     });
 
-    // Update preview number
+    // Update custom input element
+    const customInput = document.getElementById('customAnswerInput');
+    if (customInput && customInput.value !== String(val)) {
+      customInput.value = val;
+    }
+
+    // Update preview element if present
     const preview = document.getElementById('selectedDigitPreview');
     if (preview) preview.textContent = val;
 
@@ -697,10 +851,15 @@ const BananaGame = {
     if (submitBtn) submitBtn.disabled = false;
   },
 
-  clearSelection() {
+  clearSelection(resetInput = true) {
     this.selectedAnswer = null;
     const keys = document.querySelectorAll('.keypad-btn');
     keys.forEach(k => k.classList.remove('active'));
+
+    if (resetInput) {
+      const customInput = document.getElementById('customAnswerInput');
+      if (customInput) customInput.value = '';
+    }
 
     const preview = document.getElementById('selectedDigitPreview');
     if (preview) preview.textContent = '?';
@@ -709,7 +868,7 @@ const BananaGame = {
     if (submitBtn) submitBtn.disabled = true;
   },
 
-  async startRound(mode = 'classic', difficulty = 'medium') {
+  startRound(mode = 'classic', difficulty = 'medium') {
     this.mode = mode;
     this.difficulty = difficulty;
     this.status = 'playing';
@@ -737,7 +896,7 @@ const BananaGame = {
       arenaView.classList.add('active');
     }
 
-    // Hide lobby, show active gameplay stage
+    // Hide lobby, immediately show active gameplay stage
     const lobby = document.getElementById('arenaLobby');
     const stage = document.getElementById('arenaGameplay');
     if (lobby) lobby.style.display = 'none';
@@ -746,31 +905,38 @@ const BananaGame = {
     // Update HUD display
     this.updateHUD();
 
-    // Call start_session API if authenticated
-    try {
-      const res = await fetch(`${API_BASE}/puzzle.php?action=start_session`, {
-        method: 'POST',
-        headers: AuthManager.getAuthHeaders(),
-        body: JSON.stringify({
-          game_mode: this.mode,
-          difficulty: this.difficulty
-        })
-      });
-      const data = await res.json();
-      if (data.success && data.session_id) {
-        this.sessionId = data.session_id;
-      } else {
-        this.sessionId = null;
-      }
-    } catch (e) {
-      this.sessionId = null;
-    }
-
-    // Load first puzzle
-    await this.loadPuzzle();
-
-    // Start timer loop
+    // Start timer loop immediately
     this.startTimer();
+
+    // Focus custom input field
+    setTimeout(() => {
+      const customInput = document.getElementById('customAnswerInput');
+      if (customInput) customInput.focus();
+    }, 120);
+
+    // Call start_session API in background (non-blocking)
+    fetch(`${API_BASE}/puzzle.php?action=start_session`, {
+      method: 'POST',
+      headers: AuthManager.getAuthHeaders(),
+      body: JSON.stringify({
+        game_mode: this.mode,
+        difficulty: this.difficulty
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.success && data.session_id) {
+          this.sessionId = data.session_id;
+        } else {
+          this.sessionId = null;
+        }
+      })
+      .catch(() => {
+        this.sessionId = null;
+      });
+
+    // Load first puzzle immediately
+    this.loadPuzzle();
   },
 
   exitGame(saveCurrent = false) {
@@ -994,47 +1160,68 @@ const BananaGame = {
     this.puzzleSecondsLeft = diffConfig.timerSeconds;
     this.updateHUD();
 
+    // Auto-focus input field
+    const customInput = document.getElementById('customAnswerInput');
+    if (customInput) customInput.focus();
+
+    let puzzleData = null;
+
+    // Fetch with 3.5s timeout abort controller so it NEVER hangs indefinitely
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3500);
+
       const res = await fetch(`${API_BASE}/puzzle.php?action=get`, {
-        headers: AuthManager.getAuthHeaders()
+        headers: AuthManager.getAuthHeaders(),
+        signal: controller.signal
       });
+      clearTimeout(timeoutId);
       const data = await res.json();
-
-      if (data.success && data.question) {
-        this.currentPuzzle = data;
-        this.puzzleStartTime = Date.now();
-
-        // Render puzzle image directly on element with fallback
-        if (puzzleImg) {
-          let resolved = false;
-          const showImg = () => {
-            if (resolved) return;
-            resolved = true;
-            puzzleImg.style.display = 'block';
-            if (loadingState) loadingState.style.display = 'none';
-          };
-
-          puzzleImg.onload = showImg;
-          puzzleImg.onerror = showImg;
-          puzzleImg.src = data.question;
-
-          if (puzzleImg.complete) {
-            showImg();
-          }
-          setTimeout(showImg, 3000);
-        }
-
-        if (sourcePill) {
-          sourcePill.innerHTML = data.is_fallback 
-            ? '<span>🛡️</span> Offline Challenge' 
-            : '<span>🌐</span> Banana API Connected';
-        }
-      } else {
-        throw new Error('Failed to load puzzle');
+      if (data && data.success && data.question) {
+        puzzleData = data;
       }
     } catch (e) {
-      showToast('Could not fetch puzzle. Retrying...', 'error');
-      setTimeout(() => this.loadPuzzle(), 2000);
+      // Offline, network timeout or fetch error: fallback handled below
+    }
+
+    // Zero-downtime client-side fallback if server didn't provide puzzle
+    if (!puzzleData) {
+      const randFallback = CLIENT_FALLBACK_PUZZLES[Math.floor(Math.random() * CLIENT_FALLBACK_PUZZLES.length)];
+      puzzleData = {
+        puzzle_id: randFallback.puzzle_id + '_' + Date.now(),
+        question: randFallback.question,
+        solution: randFallback.solution,
+        is_fallback: true
+      };
+    }
+
+    this.currentPuzzle = puzzleData;
+    this.puzzleStartTime = Date.now();
+
+    // Render puzzle image directly on element with fast fallback display
+    if (puzzleImg) {
+      let resolved = false;
+      const showImg = () => {
+        if (resolved) return;
+        resolved = true;
+        puzzleImg.style.display = 'block';
+        if (loadingState) loadingState.style.display = 'none';
+      };
+
+      puzzleImg.onload = showImg;
+      puzzleImg.onerror = showImg;
+      puzzleImg.src = puzzleData.question;
+
+      if (puzzleImg.complete) {
+        showImg();
+      }
+      setTimeout(showImg, 1500);
+    }
+
+    if (sourcePill) {
+      sourcePill.innerHTML = puzzleData.is_fallback 
+        ? '<span>🛡️</span> Offline Challenge' 
+        : '<span>🌐</span> Banana API Connected';
     }
   },
 
@@ -1043,7 +1230,6 @@ const BananaGame = {
 
     this.isSubmitting = true;
     const timeTaken = Math.max(0.2, (Date.now() - this.puzzleStartTime) / 1000);
-    const feedback = document.getElementById('puzzleFeedback');
     const submitBtn = document.getElementById('submitPuzzleBtn');
     if (submitBtn) submitBtn.disabled = true;
 
@@ -1058,106 +1244,144 @@ const BananaGame = {
           difficulty: this.difficulty,
           game_mode: this.mode,
           time_taken: timeTaken,
-          current_streak: this.currentStreak
+          current_streak: this.currentStreak,
+          fallback_solution: typeof this.currentPuzzle.solution === 'number' ? this.currentPuzzle.solution : null
         })
       });
       const data = await res.json();
 
-      if (data.success) {
-        this.puzzlesAttempted++;
-
-        if (data.correct) {
-          app.sound.playCorrect();
-          this.puzzlesSolved++;
-          this.score += data.points_earned;
-          this.currentStreak = data.new_streak;
-          if (this.currentStreak > this.highestStreak) {
-            this.highestStreak = this.currentStreak;
-          }
-
-          // Streak fanfare
-          if (this.currentStreak >= 3) {
-            app.confetti.burst(35);
-          }
-
-          // Time bonus for Time Challenge mode
-          if (this.mode === 'time_challenge') {
-            this.overallSecondsLeft = Math.min(120, this.overallSecondsLeft + 5);
-            showToast('+5 Seconds Added! ⚡', 'success', 2000);
-          }
-
-          if (feedback) {
-            feedback.innerHTML = `🍌 <strong>Correct!</strong> +${data.points_earned} points! ` +
-              (data.speed_bonus > 0 ? `<small>(⚡ Speed Bonus: +${data.speed_bonus} pts)</small> ` : '') +
-              (this.currentStreak > 1 ? `<span style="color:#fde047">🔥 ${this.currentStreak}x Combo!</span>` : '');
-            feedback.className = 'puzzle-feedback-card correct';
-            feedback.style.display = 'block';
-          }
-
-          // Awarded in-game achievements celebration
-          if (data.new_achievements && data.new_achievements.length > 0) {
-            data.new_achievements.forEach(ach => {
-              showToast(`🏆 Achievement Unlocked: ${ach.title}!`, 'success', 4000);
-              app.confetti.burst(60);
-            });
-          }
-
-          this.updateHUD();
-
-          setTimeout(() => {
-            this.loadPuzzle();
-          }, 1100);
-
-        } else {
-          app.sound.playIncorrect();
-          this.currentStreak = 0;
-
-          if (data.can_retry) {
-            this.isSubmitting = false;
-            if (submitBtn) submitBtn.disabled = false;
-            if (feedback) {
-              feedback.innerHTML = `❌ <strong>Not quite!</strong> ${data.message}`;
-              feedback.className = 'puzzle-feedback-card incorrect';
-              feedback.style.display = 'block';
-            }
-            this.updateHUD();
-            return;
-          }
-
-          // Incorrect and no retry
-          const mConfig = MODE_CONFIG[this.mode] || MODE_CONFIG.classic;
-          if (mConfig.hasLives) {
-            this.lives--;
-          }
-
-          if (feedback) {
-            feedback.innerHTML = `❌ <strong>Incorrect!</strong> The correct digit was <strong>${data.correct_solution}</strong>.`;
-            feedback.className = 'puzzle-feedback-card incorrect';
-            feedback.style.display = 'block';
-          }
-
-          this.updateHUD();
-
-          if (mConfig.hasLives && this.lives <= 0) {
-            setTimeout(() => {
-              this.endRound('lives_exhausted');
-            }, 1400);
-            return;
-          }
-
-          setTimeout(() => {
-            this.loadPuzzle();
-          }, 1400);
-        }
+      if (data && data.success) {
+        this.handleVerificationResult(data);
       } else {
-        showToast(data.message || 'Verification error.', 'error');
+        // Fallback to local verification if solution is known
+        if (typeof this.currentPuzzle.solution === 'number') {
+          const isCorrect = this.selectedAnswer === this.currentPuzzle.solution;
+          this.handleVerificationResult({
+            success: true,
+            correct: isCorrect,
+            correct_solution: this.currentPuzzle.solution,
+            points_earned: isCorrect ? Math.round(100 * (DIFFICULTY_RULES[this.difficulty]?.multiplier || 1)) : 0,
+            speed_bonus: isCorrect && timeTaken < 8 ? 25 : 0,
+            new_streak: isCorrect ? this.currentStreak + 1 : 0,
+            can_retry: !isCorrect && this.difficulty === 'easy' && !this.canRetry,
+            new_achievements: []
+          });
+        } else {
+          showToast(data.message || 'Verification error.', 'error');
+          this.isSubmitting = false;
+          if (submitBtn) submitBtn.disabled = false;
+        }
+      }
+    } catch (e) {
+      // Local fallback verification in case of offline/network failure
+      if (typeof this.currentPuzzle.solution === 'number') {
+        const isCorrect = this.selectedAnswer === this.currentPuzzle.solution;
+        this.handleVerificationResult({
+          success: true,
+          correct: isCorrect,
+          correct_solution: this.currentPuzzle.solution,
+          points_earned: isCorrect ? Math.round(100 * (DIFFICULTY_RULES[this.difficulty]?.multiplier || 1)) : 0,
+          speed_bonus: isCorrect && timeTaken < 8 ? 25 : 0,
+          new_streak: isCorrect ? this.currentStreak + 1 : 0,
+          can_retry: !isCorrect && this.difficulty === 'easy' && !this.canRetry,
+          new_achievements: []
+        });
+      } else {
+        showToast('Network error verifying answer.', 'error');
         this.isSubmitting = false;
         if (submitBtn) submitBtn.disabled = false;
       }
-    } catch (e) {
-      showToast('Network error verifying answer.', 'error');
-      this.isSubmitting = false;
-      if (submitBtn) submitBtn.disabled = false;
+    }
+  },
+
+  handleVerificationResult(data) {
+    const feedback = document.getElementById('puzzleFeedback');
+    const submitBtn = document.getElementById('submitPuzzleBtn');
+    this.puzzlesAttempted++;
+
+    if (data.correct) {
+      app.sound.playCorrect();
+      this.puzzlesSolved++;
+      this.score += (data.points_earned || 0) + (data.speed_bonus || 0);
+      this.currentStreak = data.new_streak;
+      if (this.currentStreak > this.highestStreak) {
+        this.highestStreak = this.currentStreak;
+      }
+
+      // Streak fanfare
+      if (this.currentStreak >= 3) {
+        app.confetti.burst(35);
+      }
+
+      // Time bonus for Time Challenge mode
+      if (this.mode === 'time_challenge') {
+        this.overallSecondsLeft = Math.min(120, this.overallSecondsLeft + 5);
+        showToast('+5 Seconds Added! ⚡', 'success', 2000);
+      }
+
+      if (feedback) {
+        feedback.innerHTML = `🍌 <strong>Correct!</strong> +${data.points_earned} points! ` +
+          (data.speed_bonus > 0 ? `<small>(⚡ Speed Bonus: +${data.speed_bonus} pts)</small> ` : '') +
+          (this.currentStreak > 1 ? `<span style="color:#fde047">🔥 ${this.currentStreak}x Combo!</span>` : '');
+        feedback.className = 'puzzle-feedback-card correct';
+        feedback.style.display = 'block';
+      }
+
+      // Awarded in-game achievements celebration
+      if (data.new_achievements && data.new_achievements.length > 0) {
+        data.new_achievements.forEach(ach => {
+          showToast(`🏆 Achievement Unlocked: ${ach.title}!`, 'success', 4000);
+          app.confetti.burst(60);
+        });
+      }
+
+      this.updateHUD();
+
+      setTimeout(() => {
+        this.loadPuzzle();
+      }, 1000);
+
+    } else {
+      app.sound.playIncorrect();
+      this.currentStreak = 0;
+
+      if (data.can_retry) {
+        this.isSubmitting = false;
+        this.canRetry = true;
+        if (submitBtn) submitBtn.disabled = false;
+        if (feedback) {
+          feedback.innerHTML = `❌ <strong>Not quite!</strong> ${data.message || 'Try again!'}`;
+          feedback.className = 'puzzle-feedback-card incorrect';
+          feedback.style.display = 'block';
+        }
+        this.updateHUD();
+        return;
+      }
+
+      // Incorrect and no retry
+      const mConfig = MODE_CONFIG[this.mode] || MODE_CONFIG.classic;
+      if (mConfig.hasLives) {
+        this.lives--;
+      }
+
+      if (feedback) {
+        feedback.innerHTML = `❌ <strong>Incorrect!</strong> The correct digit was <strong>${data.correct_solution}</strong>.`;
+        feedback.className = 'puzzle-feedback-card incorrect';
+        feedback.style.display = 'block';
+      }
+
+      this.updateHUD();
+
+      if (mConfig.hasLives && this.lives <= 0) {
+        setTimeout(() => {
+          this.endRound('lives_exhausted');
+        }, 1300);
+        return;
+      }
+
+      setTimeout(() => {
+        this.loadPuzzle();
+      }, 1300);
     }
   },
 

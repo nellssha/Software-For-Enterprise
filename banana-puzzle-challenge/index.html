@@ -112,6 +112,9 @@
                 <span>⏱️ Puzzle Timer</span>
                 <span>🔥 Streak Combos</span>
               </div>
+              <button type="button" class="btn btn-primary btn-sm mode-card-play-btn" data-mode="classic" style="margin-top: 1rem; width: 100%;">
+                <span>▶</span> Play Classic Arena
+              </button>
             </div>
 
             <div class="mode-card" data-mode="time_challenge">
@@ -128,6 +131,9 @@
                 <span>⏳ Time Bonuses</span>
                 <span>🚀 Rapid Scoring</span>
               </div>
+              <button type="button" class="btn btn-primary btn-sm mode-card-play-btn" data-mode="time_challenge" style="margin-top: 1rem; width: 100%;">
+                <span>⚡</span> Play Time Challenge
+              </button>
             </div>
 
             <div class="mode-card" data-mode="practice">
@@ -144,6 +150,9 @@
                 <span>🚫 No Timer Stress</span>
                 <span>💡 Free Training</span>
               </div>
+              <button type="button" class="btn btn-primary btn-sm mode-card-play-btn" data-mode="practice" style="margin-top: 1rem; width: 100%;">
+                <span>🧘</span> Play Practice Zen
+              </button>
             </div>
 
           </div>
@@ -305,10 +314,21 @@
             
             <div class="input-header-row">
               <label for="customAnswerInput" class="input-header-label">
-                Select or type the missing single digit:
+                Click a digit below or type it in:
               </label>
               <div class="selected-digit-preview">
-                Your Answer: <span id="selectedDigitPreview" class="preview-number">?</span>
+                Your Answer: 
+                <input 
+                  type="number" 
+                  id="customAnswerInput" 
+                  class="custom-digit-input" 
+                  min="0" 
+                  max="9" 
+                  placeholder="?" 
+                  autocomplete="off"
+                  aria-label="Enter your single digit answer (0-9)"
+                >
+                <span id="selectedDigitPreview" style="display:none;">?</span>
               </div>
             </div>
 
@@ -755,6 +775,6 @@
   <div id="toastContainer" class="toast-container"></div>
 
   <!-- JavaScript Application -->
-  <script src="js/script.js"></script>
+  <script src="js/script.js?v=2.5"></script>
 </body>
 </html>

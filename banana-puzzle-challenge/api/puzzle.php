@@ -306,15 +306,26 @@ switch ($action) {
         break;
 
     case 'verify':
-        if (!isset($_SESSION['current_puzzle']) || empty($_SESSION['current_puzzle']['active'])) {
+        $currentPuzzle = null;
+        $correctSolution = null;
+
+        if (isset($_SESSION['current_puzzle']) && !empty($_SESSION['current_puzzle']['active'])) {
+            $currentPuzzle = &$_SESSION['current_puzzle'];
+            $correctSolution = (int)$currentPuzzle['solution'];
+        } elseif (isset($params['fallback_solution']) && is_numeric($params['fallback_solution'])) {
+            $correctSolution = (int)$params['fallback_solution'];
+            $currentPuzzle = [
+                'id' => $params['puzzle_id'] ?? 'client_fallback',
+                'solution' => $correctSolution,
+                'attempts' => 0,
+                'active' => true
+            ];
+        } else {
             sendResponse([
                 'success' => false,
                 'message' => 'No active puzzle found. Request a new puzzle first.'
             ], 400);
         }
-
-        $currentPuzzle = &$_SESSION['current_puzzle'];
-        $correctSolution = (int)$currentPuzzle['solution'];
 
         if (!isset($params['answer']) || $params['answer'] === '') {
             sendResponse(['success' => false, 'message' => 'Please provide your answer.'], 400);
