@@ -730,8 +730,12 @@ const BananaGame = {
     this.overallSecondsLeft = MODE_CONFIG.time_challenge.durationSeconds;
     this.puzzleSecondsLeft = diffConfig.timerSeconds;
 
-    // Switch view to arena
-    app.switchView('arena');
+    // Ensure viewArena section is active
+    const arenaView = document.getElementById('viewArena');
+    if (arenaView && !arenaView.classList.contains('active')) {
+      document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+      arenaView.classList.add('active');
+    }
 
     // Hide lobby, show active gameplay stage
     const lobby = document.getElementById('arenaLobby');
@@ -1000,23 +1004,25 @@ const BananaGame = {
         this.currentPuzzle = data;
         this.puzzleStartTime = Date.now();
 
-        // Preload image
-        const img = new Image();
-        img.onload = () => {
-          if (puzzleImg) {
-            puzzleImg.src = data.question;
+        // Render puzzle image directly on element with fallback
+        if (puzzleImg) {
+          let resolved = false;
+          const showImg = () => {
+            if (resolved) return;
+            resolved = true;
             puzzleImg.style.display = 'block';
+            if (loadingState) loadingState.style.display = 'none';
+          };
+
+          puzzleImg.onload = showImg;
+          puzzleImg.onerror = showImg;
+          puzzleImg.src = data.question;
+
+          if (puzzleImg.complete) {
+            showImg();
           }
-          if (loadingState) loadingState.style.display = 'none';
-        };
-        img.onerror = () => {
-          if (puzzleImg) {
-            puzzleImg.src = data.question;
-            puzzleImg.style.display = 'block';
-          }
-          if (loadingState) loadingState.style.display = 'none';
-        };
-        img.src = data.question;
+          setTimeout(showImg, 3000);
+        }
 
         if (sourcePill) {
           sourcePill.innerHTML = data.is_fallback 
